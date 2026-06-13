@@ -8,7 +8,7 @@ The repository is a multi-module workspace. Each subdirectory is an independent 
 
 - `shape-basics/` contains minimal generic functions (`First`, `StoreFirst`, `Greet` and a few multi-method / make / nested-generic variants). You inspect the `go build -gcflags=-S` output to see the shape body, the per-instantiation wrapper, and the dictionary.
 - `shape-effectiveness/` measures how much shape sharing reduces compiled code. It instantiates the same generic function with three groups of concrete types and counts the resulting shape bodies.
-- `bench-2022-reproduction/` reproduces benchmarks from PlanetScale (2022-03-30) and DoltHub (2022-04-01) on Go 1.26.1 and compares the numbers with the original reports.
+- `bench-2022-reproduction/` reproduces benchmarks from PlanetScale ([Generics can make your Go code slower](https://planetscale.com/blog/generics-can-make-your-go-code-slower), 2022-03-30) and DoltHub ([Generics and Value Types in Golang](https://www.dolthub.com/blog/2022-04-01-fast-generics/), 2022-04-01) on Go 1.26.1 and compares the numbers with the original reports.
 
 ## Usage
 

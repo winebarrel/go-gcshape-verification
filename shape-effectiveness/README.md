@@ -37,4 +37,4 @@ The shape grouping rule in Go 1.18+ is "same underlying type, or both pointer ty
 
 On Go 1.26.1 (darwin/arm64), the total `STEXT` size for `Process` was around 71% smaller than a hypothetical fully monomorphised build of the same code. The exact ratio depends on the function body and the platform.
 
-This is a deliberately favourable case for shape sharing. The OOPSLA 2022 paper *Generic Go to Go* observes in §6.4 that in their realistic benchmarks they "do not observe the reuse of method implementations" because the Go 1.18 grouping rule is conservative.
+This is a deliberately favourable case for shape sharing. The OOPSLA 2022 paper [Generic Go to Go](https://songlh.github.io/paper/generic.pdf) observes in §6.4 that in their realistic benchmarks they "do not observe the reuse of method implementations" because the Go 1.18 grouping rule is conservative.
