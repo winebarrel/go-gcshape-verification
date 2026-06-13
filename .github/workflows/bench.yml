@@ -49,7 +49,12 @@ jobs:
             echo "- benchtime: \`${{ inputs.benchtime }}\`"
             echo "- count: \`${{ inputs.count }}\`"
             echo ""
+            python3 .github/workflows/summarize.py < /tmp/bench.txt
+            echo "<details><summary>Raw output</summary>"
+            echo ""
             echo '```'
             cat /tmp/bench.txt
             echo '```'
+            echo ""
+            echo "</details>"
           } >> "$GITHUB_STEP_SUMMARY"
