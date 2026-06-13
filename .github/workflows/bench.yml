@@ -3,13 +3,6 @@ name: Benchmark
 on:
   workflow_dispatch:
     inputs:
-      runner:
-        description: Runner to use
-        type: choice
-        default: ubuntu-latest
-        options:
-          - ubuntu-latest
-          - macos-latest
       benchtime:
         description: -benchtime value
         type: string
@@ -21,7 +14,11 @@ on:
 
 jobs:
   bench:
-    runs-on: ${{ inputs.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        runner: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.runner }}
     steps:
       - uses: actions/checkout@v5
 
@@ -36,25 +33,53 @@ jobs:
           go test -bench=. -benchmem \
             -benchtime=${{ inputs.benchtime }} \
             -count=${{ inputs.count }} \
-            2>&1 | tee /tmp/bench.txt
+            2>&1 | tee bench.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bench-${{ matrix.runner }}
+          path: bench-2022-reproduction/bench.txt
+
+  summary:
+    needs: bench
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
 
       - name: Write summary
-        if: always()
         run: |
+          args=()
+          for dir in artifacts/bench-*; do
+            [ -f "$dir/bench.txt" ] || continue
+            runner=$(basename "$dir" | sed 's/^bench-//')
+            args+=("$runner=$dir/bench.txt")
+          done
           {
             echo "## Benchmark results"
             echo ""
-            echo "- Go: \`$(go version)\`"
-            echo "- Runner: \`${{ inputs.runner }}\` (\`${{ runner.os }}\` / \`${{ runner.arch }}\`)"
             echo "- benchtime: \`${{ inputs.benchtime }}\`"
             echo "- count: \`${{ inputs.count }}\`"
             echo ""
-            python3 .github/workflows/summarize.py < /tmp/bench.txt
-            echo "<details><summary>Raw output</summary>"
-            echo ""
-            echo '```'
-            cat /tmp/bench.txt
-            echo '```'
-            echo ""
-            echo "</details>"
+            if [ ${#args[@]} -gt 0 ]; then
+              python3 .github/workflows/summarize.py "${args[@]}"
+            else
+              echo "No benchmark output was produced."
+            fi
+            for dir in artifacts/bench-*; do
+              [ -f "$dir/bench.txt" ] || continue
+              runner=$(basename "$dir" | sed 's/^bench-//')
+              echo "<details><summary>Raw output: ${runner}</summary>"
+              echo ""
+              echo '```'
+              cat "$dir/bench.txt"
+              echo '```'
+              echo ""
+              echo "</details>"
+              echo ""
+            done
           } >> "$GITHUB_STEP_SUMMARY"
