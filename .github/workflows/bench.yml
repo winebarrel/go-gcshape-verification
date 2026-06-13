@@ -40,7 +40,7 @@ jobs:
           name: bench-${{ matrix.runner }}
           path: bench-2022-reproduction/bench.txt
 
-  summary:
+  report:
     needs: bench
     if: always()
     runs-on: ubuntu-latest
@@ -51,7 +51,7 @@ jobs:
         with:
           path: artifacts
 
-      - name: Write summary
+      - name: Write report
         run: |
           args=()
           for dir in artifacts/bench-*; do
