@@ -13,7 +13,7 @@ The two articles are:
 go test -bench=. -benchmem -benchtime=2s -count=3
 ```
 
-The repository also has a manual GitHub Actions workflow named "Benchmark". Running it from the Actions tab runs the same command on `ubuntu-latest` or `macos-latest` (selectable as an input) and prints the results in the job summary.
+The repository also has a manual [Benchmark workflow](https://github.com/winebarrel/go-gcshape-verification/actions/workflows/bench.yml). Running it runs the same command on `ubuntu-latest` or `macos-latest` (selectable as an input) and prints the results in the job summary.
 
 ## Files
 

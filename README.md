@@ -24,7 +24,7 @@ go test -bench=. -benchmem -benchtime=2s -count=3
 
 Tested on Go 1.26.1, darwin/arm64 (Apple Silicon). Numbers will differ on other platforms.
 
-The benchmarks can also be run on GitHub-hosted runners from the Actions tab via the "Benchmark" workflow, which accepts `ubuntu-latest` or `macos-latest` as input and prints the results in the run summary.
+The benchmarks can also be run on GitHub-hosted runners via the [Benchmark workflow](https://github.com/winebarrel/go-gcshape-verification/actions/workflows/bench.yml), which accepts `ubuntu-latest` or `macos-latest` as input and prints the results in the run summary.
 
 ## Notes
 
