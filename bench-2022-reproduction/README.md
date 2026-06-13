@@ -4,7 +4,7 @@ Reproduces two well-known 2022 generics benchmarks on Go 1.26.1 and compares the
 
 The two articles are:
 
-- PlanetScale, Vicent Marti, [Generics can make your Go code slower](https://planetscale.com/blog/generics-can-make-your-go-code-slower) (2022-03-30)
+- PlanetScale, Vicent Marti, [Generics can make your Go code slower](https://planetscale.com/blog/generics-can-make-your-go-code-slower) ([Wayback Machine snapshot](https://web.archive.org/web/20220522015937/https://planetscale.com/blog/generics-can-make-your-go-code-slower), 2022-03-30)
 - DoltHub, Andy Arthur, [Generics and Value Types in Golang](https://www.dolthub.com/blog/2022-04-01-fast-generics/) (2022-04-01)
 
 ## Running
