@@ -35,7 +35,7 @@ jobs:
             -count=${{ inputs.count }} \
             2>&1 | tee bench.txt
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: bench-${{ matrix.runner }}
           path: bench-2022-reproduction/bench.txt
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v5
         with:
           path: artifacts
 
