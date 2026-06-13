@@ -1,0 +1,54 @@
+name: Benchmark
+
+on:
+  workflow_dispatch:
+    inputs:
+      runner:
+        description: Runner to use
+        type: choice
+        default: ubuntu-latest
+        options:
+          - ubuntu-latest
+          - macos-latest
+      benchtime:
+        description: -benchtime value
+        type: string
+        default: 2s
+      count:
+        description: -count value
+        type: string
+        default: '3'
+
+jobs:
+  bench:
+    runs-on: ${{ inputs.runner }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Run benchmarks
+        working-directory: bench-2022-reproduction
+        run: |
+          go test -bench=. -benchmem \
+            -benchtime=${{ inputs.benchtime }} \
+            -count=${{ inputs.count }} \
+            2>&1 | tee /tmp/bench.txt
+
+      - name: Write summary
+        if: always()
+        run: |
+          {
+            echo "## Benchmark results"
+            echo ""
+            echo "- Go: \`$(go version)\`"
+            echo "- Runner: \`${{ inputs.runner }}\` (\`${{ runner.os }}\` / \`${{ runner.arch }}\`)"
+            echo "- benchtime: \`${{ inputs.benchtime }}\`"
+            echo "- count: \`${{ inputs.count }}\`"
+            echo ""
+            echo '```'
+            cat /tmp/bench.txt
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
