@@ -13,6 +13,8 @@ The two articles are:
 go test -bench=. -benchmem -benchtime=2s -count=3
 ```
 
+The repository also has a manual GitHub Actions workflow named "Benchmark". Running it from the Actions tab runs the same command on `ubuntu-latest` or `macos-latest` (selectable as an input) and prints the results in the job summary.
+
 ## Files
 
 `dolthub.go` does binary search over `ArrayVal` (a value receiver) and `ArrayRef` (a pointer receiver), through an `Array` interface and through an `Array`-constrained generic function. The code is taken directly from the article.

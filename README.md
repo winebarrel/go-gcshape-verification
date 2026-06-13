@@ -24,6 +24,8 @@ go test -bench=. -benchmem -benchtime=2s -count=3
 
 Tested on Go 1.26.1, darwin/arm64 (Apple Silicon). Numbers will differ on other platforms.
 
+The benchmarks can also be run on GitHub-hosted runners from the Actions tab via the "Benchmark" workflow, which accepts `ubuntu-latest` or `macos-latest` as input and prints the results in the run summary.
+
 ## Notes
 
 This is study material rather than a library. The Go 1.18+ shape grouping rule is "same underlying type, or both pointer types", and each benchmark is set up so that the consequences of that rule are visible at the assembly level.
