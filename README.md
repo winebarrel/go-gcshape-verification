@@ -1,4 +1,4 @@
-# go-gcshape-verification
+# go-gcshape-verification-example
 
 Verification code for the Go 1.18+ generics implementation (GC Shape Stenciling with dictionary passing). The code is set up so that you can read the compiled assembly and confirm what the design documents describe. It also measures how much shape sharing reduces binary size, and reproduces two well-known 2022 benchmarks on Go 1.26.
 
